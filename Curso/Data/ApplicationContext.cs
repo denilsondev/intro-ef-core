@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using CursoEfCore.Domain;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,13 @@ namespace CursoEfCore.Data
             optionsBuilder
                 .UseLoggerFactory(_logger)
                 .EnableSensitiveDataLogging()
-                .UseSqlServer("Server=localhost,1433;Database=CursoEfCore;User Id=SA;Password=password@123;");
+                .UseSqlServer("Server=localhost,1433;Database=CursoEfCore;User Id=SA;Password=password@13;",
+                p => p.EnableRetryOnFailure(
+                    maxRetryCount: 2,
+                    maxRetryDelay: TimeSpan.FromSeconds(5),
+                    errorNumbersToAdd:null
+                ));
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
