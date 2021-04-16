@@ -25,7 +25,8 @@ namespace CursoEfCore
         private static void RemoverRegistro()
         {
             using var db = new Data.ApplicationContext();
-            var cliente = db.Clientes.Find(5);
+            // var cliente = db.Clientes.Find(5);
+            var cliente = new Cliente {Id = 6};
             //db.Clientes.Remove(cliente);
             //db.Remove(cliente);
             db.Entry(cliente).State = EntityState.Deleted;
