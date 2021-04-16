@@ -11,7 +11,7 @@ namespace CursoEfCore.Domain {
         public DateTime iniciadoEm { get; set; }
         public DateTime finalizadoEm { get; set; }
         public TipoFrete TipoFrete { get; set; }
-        public StatusPedido StatusPedido { get; set; }
+        public StatusPedido Status { get; set; }
         public string Observacao { get; set; }
         public ICollection<PedidoItem> Itens { get; set; }
 
