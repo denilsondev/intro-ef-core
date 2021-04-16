@@ -1,21 +1,18 @@
-# Foobar
+# Curso EF Core
 
-Foobar is a Python library for dealing with word pluralization.
+Project developed trough course of "Introducao ao EF Core" on desenvolvedor.io platform.
 
-## Installation
+## Run App
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use docker to run SQL environment
 
 ```bash
-pip install foobar
+bash docker-compose up -d 
 ```
 
-## Usage
+## Create and running migrations
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+```bash
+dotnet ef migrations add PrimeiraMigracao -p CursoEFCore.csproj -i 
+dotnet ef database update -p cursoEFCore.csproj -v 
 ```
