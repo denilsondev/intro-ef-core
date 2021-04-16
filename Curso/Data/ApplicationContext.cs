@@ -8,7 +8,7 @@ namespace CursoEfCore.Data
         public DbSet<Pedido> Pedidos {get; set;}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;");
+            optionsBuilder.UseSqlServer("Server=localhost:1433,Database=testdb;User Id=SA;Password=password@123;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
