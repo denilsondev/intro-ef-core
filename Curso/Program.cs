@@ -16,9 +16,39 @@ namespace CursoEfCore
             // InserirDadosEmMassa();
             // ConsultarDados();
             // CadastrarPedido();
-            consultaPedidoCarregamentoAdiantado();
+            // consultaPedidoCarregamentoAdiantado();
+            // AtualizarDados();
+            AtualizarDadosDesconectado();
         }
 
+        private static void AtualizarDadosDesconectado()
+        {
+            using var db = new Data.ApplicationContext();
+
+            var cliente = new Cliente 
+            {
+                Id = 1
+            };
+            var clienteDesconectado = new {
+                Nome = "Cliente Desconectado Passo 3",
+                Telefone = "147854221"
+            };
+
+            db.Attach(cliente);
+            db.Entry(cliente).CurrentValues.SetValues(clienteDesconectado);
+
+            // db.Clientes.Update(cliente);
+            db.SaveChanges();
+        }
+        private static void AtualizarDados()
+        {
+            using var db = new Data.ApplicationContext();
+            var cliente = db.Clientes.Find(1);
+            cliente.Nome = "Cliente alterado Passo 2";
+
+            // db.Clientes.Update(cliente);
+            db.SaveChanges();
+        }
         private static void consultaPedidoCarregamentoAdiantado()
         {
             using var db = new Data.ApplicationContext();
@@ -30,6 +60,7 @@ namespace CursoEfCore
 
             System.Console.WriteLine(pedidos.Count);
         }
+
 
         private static void CadastrarPedido(){
             using var db = new Data.ApplicationContext();
