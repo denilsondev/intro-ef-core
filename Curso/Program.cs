@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq;
 using CursoEfCore.Domain;
 using CursoEfCore.ValueObjects;
 
@@ -10,7 +12,16 @@ namespace CursoEfCore
         static void Main(string[] args)
         {
             // InserirDados();
-            InserirDadosEmMassa();
+            // InserirDadosEmMassa();
+            ConsultarDados();
+        }
+
+        private static void ConsultarDados()
+        {
+            using var db = new Data.ApplicationContext();
+            // var consultaPorSintaxe = (from c in db.Clientes where c.Id>0 select c).ToList();
+            var consultaPorMetodo = db.Clientes.ToList();
+            System.Console.WriteLine(consultaPorMetodo);
         }
 
         private static void InserirDadosEmMassa()
@@ -33,9 +44,6 @@ namespace CursoEfCore
                     Estado = "SP",
                     Telefone = "11986379127"
                 },
-
-
-
             };
 
             using var db = new Data.ApplicationContext();
@@ -43,7 +51,6 @@ namespace CursoEfCore
 
             var registros = db.SaveChanges();
             System.Console.WriteLine($"Total Registro(s): {registros}");
-
         }
 
         private static void InserirDados()
