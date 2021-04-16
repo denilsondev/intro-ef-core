@@ -1,3 +1,4 @@
+using System.Linq;
 using CursoEfCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -21,7 +22,24 @@ namespace CursoEfCore.Data
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             modelbuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
+            MapearPropriedadesEsquecidas(modelbuilder);
+        }
 
+        private void MapearPropriedadesEsquecidas(ModelBuilder modelbuilder)
+        {
+            foreach(var entity in modelbuilder.Model.GetEntityTypes())
+            {
+                var properties = entity.GetProperties().Where(p => p.ClrType == typeof(string));
+
+                foreach(var property in properties)
+                {
+                    if(string.IsNullOrEmpty(property.GetColumnType()) && !property.GetMaxLength().HasValue)
+                    {
+                        property.SetColumnType("VARCHAR(100)");
+                    }
+
+                }
+            }
         }
     }
 }
