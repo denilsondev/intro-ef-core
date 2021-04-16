@@ -7,7 +7,7 @@ Project developed trough course of "Introducao ao EF Core" on desenvolvedor.io p
 Use docker to run SQL environment
 
 ```bash
-bash docker-compose up -d 
+docker-compose up -d 
 ```
 
 ## Create and running migrations
