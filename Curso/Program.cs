@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq;
 using CursoEfCore.Domain;
 using CursoEfCore.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace CursoEfCore
 {
@@ -13,7 +14,51 @@ namespace CursoEfCore
         {
             // InserirDados();
             // InserirDadosEmMassa();
-            ConsultarDados();
+            // ConsultarDados();
+            // CadastrarPedido();
+            consultaPedidoCarregamentoAdiantado();
+        }
+
+        private static void consultaPedidoCarregamentoAdiantado()
+        {
+            using var db = new Data.ApplicationContext();
+            var pedidos = db
+                            .Pedidos
+                            .Include(pedidos => pedidos.Itens)
+                            .ThenInclude(pedidos => pedidos.Produto)
+                            .ToList();
+
+            System.Console.WriteLine(pedidos.Count);
+        }
+
+        private static void CadastrarPedido(){
+            using var db = new Data.ApplicationContext();
+
+            var cliente = db.Clientes.FirstOrDefault();
+            var produto = db.Produtos.FirstOrDefault();
+
+            var pedido = new Pedido
+            {
+                ClienteId = cliente.Id,
+                IniciadoEm = DateTime.Now,
+                FinalizadoEm = DateTime.Now,
+                Observacao = "Pedido teste",
+                Status = StatusPedido.Analise,
+                TipoFrete = TipoFrete.SemFrete,
+                Itens = new List<PedidoItem>
+                {
+                    new PedidoItem
+                    {
+                        ProdutoId = produto.Id,
+                        Desconto = 0,
+                        Quantidade = 1,
+                        Valor = 10,
+                    }
+                }
+            };
+
+            db.Pedidos.Add(pedido);
+            db.SaveChanges();
         }
 
         private static void ConsultarDados()
